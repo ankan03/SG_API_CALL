@@ -25,12 +25,14 @@ class SignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://192.168.43.217:3000")
-//                .baseUrl("http://sg-backend-dev.ap-south-1.elasticbeanstalk.com")
+//                .baseUrl("http://192.168.43.217:3000")
+                .baseUrl("http://sg-backend-dev.ap-south-1.elasticbeanstalk.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+
             val api = retrofit.create(Api::class.java)
-            api.userSignup(number).enqueue(object :Callback<AuthKey>{
+            val number1 = Number(number)
+            api.userSignup(number1).enqueue(object :Callback<AuthKey>{
                 override fun onResponse(call: Call<AuthKey>, response: Response<AuthKey>) {
                     d("Ankan","OnResponse: ${response.body()?.message.toString()} \n"
                             +"Auth Token: ${response.body()?.auth_token.toString()} \n"
